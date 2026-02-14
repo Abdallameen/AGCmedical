@@ -33,22 +33,13 @@
     <button onclick="setLang('en')">English</button>
 </header>
 
-<div class="controls">
-    <button onclick="filterProducts('all')" id="allBtn">كل المنتجات</button>
-    <button onclick="filterProducts('instant')" id="instantBtn" class="btn-instant">توريد فوري</button>
-    <button onclick="filterProducts('lab')">المعمل والتشخيص</button>
-    <button onclick="filterProducts('surgery')">الجراحة والتعقيم</button>
-    <button onclick="filterProducts('vet')">الرعاية البيطرية</button>
-    <button onclick="filterProducts('sonar')">السونار Sonoscape</button>
-    <button onclick="filterProducts('xray')">Xray</button>
-    <button onclick="filterProducts('dental')">الأسنان</button>
-    <button onclick="filterProducts('blood')">نقل الدم</button>
-    <button onclick="filterProducts('misc')">منوعات</button>
-</div>
+<div class="controls" id="categoryButtons"></div>
+
 
 <div id="products"></div>
 
 <script src="script.js"></script>
 </body>
 </html>
+
 

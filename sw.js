@@ -1,4 +1,4 @@
-const cacheName = 'med-catalog-v1';
+const cacheName = 'med-catalog-v2';
 const assets = [
   './',
   './index.html',

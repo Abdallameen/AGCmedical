@@ -1,9 +1,10 @@
 let products = []; 
 let currentLang = "ar";
 
+// رابط الـ API الخاص بك
 const apiURL = "https://api.steinhq.com/v1/storages/6978e66baffba40a6241d79d/Sheet1"; 
 
-// 1. قاموس ترجمة الأقسام
+// 1. قاموس ترجمة الأقسام (تأكد أن الأسماء في الإكسيل تطابق الـ Key هنا)
 const categoryNames = {
     all: { ar: "كل المنتجات", en: "All Products" },
     instant: { ar: "توريد فوري", en: "Instant Supply" },
@@ -19,6 +20,9 @@ const categoryNames = {
 
 async function loadProducts() {
     try {
+        // إضافة مؤشر تحميل بسيط في البداية
+        document.getElementById("products").innerHTML = currentLang === "ar" ? "<p>جاري تحميل الكتالوج...</p>" : "<p>Loading Catalog...</p>";
+        
         const response = await fetch(apiURL);
         const data = await response.json();
         
@@ -32,24 +36,23 @@ async function loadProducts() {
             category: item.category 
         }));
 
-        renderButtons(); // رسم الأزرار باللغة الافتراضية
+        renderButtons(); 
         showProducts(products); 
     } catch (error) {
         console.error("خطأ في تحميل البيانات:", error);
+        document.getElementById("products").innerHTML = "<p>Error loading data. Please check your connection.</p>";
     }
 }
 
-// 2. دالة لإنشاء الأزرار وترجمتها
 function renderButtons() {
     const btnContainer = document.getElementById("categoryButtons");
-    btnContainer.innerHTML = ""; // مسح الأزرار الحالية
+    if(!btnContainer) return;
+    btnContainer.innerHTML = ""; 
 
-    // إنشاء الأزرار بناءً على القاموس أعلاه
     Object.keys(categoryNames).forEach(key => {
         const btn = document.createElement("button");
         btn.innerText = categoryNames[key][currentLang];
         
-        // تمييز زر التوريد الفوري بلون مختلف
         if(key === 'instant') btn.className = "btn-instant";
         
         btn.onclick = () => filterProducts(key);
@@ -61,15 +64,24 @@ function showProducts(list) {
     const div = document.getElementById("products");
     div.innerHTML = "";
 
+    if (list.length === 0) {
+        div.innerHTML = currentLang === "ar" ? "<p>لا توجد منتجات في هذا القسم حالياً.</p>" : "<p>No products found in this category.</p>";
+        return;
+    }
+
     list.forEach(p => {
+        // ميزة Lazy Loading مضافة هنا لتحسين الأداء
         div.innerHTML += `
             <div class="card ${p.isInstant ? 'instant' : ''}">
-                <img src="${p.img}" alt="product" onerror="this.src='https://via.placeholder.com/280x200?text=No+Image'">
+                <img src="${p.img}" 
+                     loading="lazy" 
+                     alt="product image" 
+                     onerror="this.onerror=null;this.src='https://via.placeholder.com/280x200?text=Image+Not+Found'">
                 <h3>${p.name[currentLang] || ''}</h3>
                 <p>${p.desc[currentLang] || ''}</p>
                 <p><strong>${currentLang === "ar" ? "السعر" : "Price"}:</strong> ${p.price || ''}</p>
                 <p><strong>${currentLang === "ar" ? "التوريد" : "Supply"}:</strong> ${p.supplyText[currentLang] || ''}</p>
-                <a href="https://wa.me/+966560967982?text=${currentLang === 'ar' ? 'أهلاً، استفسار عن' : 'Hello, inquiry about'}: ${p.name[currentLang]}" target="_blank">
+                <a href="https://wa.me/966560967982?text=${encodeURIComponent((currentLang === 'ar' ? 'أهلاً، استفسار عن: ' : 'Hello, inquiry about: ') + p.name[currentLang])}" target="_blank">
                     ${currentLang === "ar" ? "اطلب الآن" : "Order Now"}
                 </a>
             </div>
@@ -90,9 +102,10 @@ function filterProducts(type) {
 function setLang(lang) {
     currentLang = lang;
     document.body.style.direction = lang === "ar" ? "rtl" : "ltr";
-    document.getElementById("title").innerText = lang === "ar" ? "كتالوج المنتجات الطبية" : "Medical Products Catalog";
+    const title = document.getElementById("title");
+    if(title) title.innerText = lang === "ar" ? "كتالوج المنتجات الطبية" : "Medical Products Catalog";
     
-    renderButtons(); // إعادة رسم الأزرار باللغة الجديدة
+    renderButtons(); 
     showProducts(products);
 }
 

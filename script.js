@@ -7,7 +7,7 @@ const apiURL = "https://api.steinhq.com/v1/storages/6978e66baffba40a6241d79d/She
 
 // قاموس ترجمة الأقسام
 const categoryNames = {
-    all: { ar: "🌟 كل المنتجات", en: "🌟 All Products" },
+    all: { ar: " كل المنتجات", en: " All Products" },
     instant: { ar: "⚡ توريد فوري", en: "⚡ Instant Supply" },
     lab: { ar: "🔬 المعمل والتشخيص", en: "🔬 Lab & Diagnostics" },
     surgery: { ar: "🏥 الجراحة والتعقيم", en: "🏥 Surgery & Sterilization" },

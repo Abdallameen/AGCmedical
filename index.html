@@ -65,14 +65,37 @@
             background: rgba(255,255,255,0.4);
         }
 
+        /* تنسيق الرقم بشكل صحيح LTR */
+        .contact-info {
+            direction: ltr !important;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
         .logo-section {
             padding: 20px;
             text-align: center;
         }
 
-        .logo-icon {
-            font-size: 50px;
+        /* تنسيق اللوجو - استبدل الصورة بلوجوك هنا */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 10px;
+        }
+
+        .custom-logo {
+            max-width: 120px;
+            height: auto;
+            width: auto;
+        }
+
+        /* لو عايز تستخدم SVG أو نص بدل الصورة مؤقتاً */
+        .logo-placeholder {
+            font-size: 50px;
         }
 
         .logo-section h1 {
@@ -265,9 +288,20 @@
             margin-bottom: 10px;
         }
 
+        .footer-logo-img {
+            max-width: 80px;
+            height: auto;
+        }
+
         .footer-company {
             font-size: 20px;
             margin-bottom: 5px;
+        }
+
+        .footer-contact {
+            margin-top: 15px;
+            direction: ltr !important;
+            font-family: 'Courier New', monospace;
         }
 
         .footer-copyright {
@@ -335,15 +369,18 @@
     <header class="main-header">
         <div class="header-top">
             <div class="lang-buttons">
-                <button class="lang-btn" onclick="setLang('ar')">🇸🇪 عربي</button>
+                <button class="lang-btn" onclick="setLang('ar')">🇸🇦 عربي</button>
                 <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
             </div>
-            <div class="contact-info">
-                📞 +966 56 096 7982
-            </div>
+            <!-- الرقم معروض بشكل صحيح من الشمال لليمين -->
+            <div class="contact-info">📞 +966 56 096 7982</div>
         </div>
         <div class="logo-section">
-            <div class="logo-icon">🏥</div>
+            <!-- منطقة اللوجو - استبدل المحتوى هنا بلوجوك -->
+            <div class="logo-container">
+                <img class="custom-logo" src="images/icon-192.png" alt="AGC Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <div class="logo-placeholder" style="display: none;">🏥</div>
+            </div>
             <h1>
                 <span class="arabic-name">مؤسسة ركن الخليج العربي</span><br>
                 <span class="english-name">Arabian Gulf Corner | AGC</span>
@@ -358,11 +395,14 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-logo">🏥</div>
+            <div class="footer-logo">
+                <img class="footer-logo-img" src="images/icon-192.png" alt="AGC" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <div style="display: none;">🏥</div>
+            </div>
             <div class="footer-company">مؤسسة ركن الخليج العربي</div>
             <div class="footer-company">Arabian Gulf Corner (AGC)</div>
-            <p style="margin-top: 15px;">📞 +966 56 096 7982 | ✉️ info@agc-medical.com</p>
-            <p style="margin-top: 10px;">📍 المملكة العربية السعودية | Saudi Arabia</p>
+            <div class="footer-contact">📞 +966 56 096 7982 | ✉️ info@agc-medical.com</div>
+            <p>📍 المملكة العربية السعودية | Saudi Arabia</p>
             <div class="footer-copyright">© 2024 جميع الحقوق محفوظة | All Rights Reserved</div>
         </div>
     </footer>

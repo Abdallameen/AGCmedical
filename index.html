@@ -6,13 +6,14 @@
     <meta name="description" content="مؤسسة ركن الخليج العربي - كتالوج المنتجات الطبية المتخصصة">
     <meta name="theme-color" content="#0d6efd">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="logo192.png">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
       if('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
       }
     </script>
-    <title>مؤسسة ركن الخليج العربي | AGC - الكتالوج الطبي</title>
+    <title>مؤسسة ركن الخليج العربي | AGC - المتجر الطبي</title>
     <style>
         * {
             margin: 0;
@@ -23,18 +24,19 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             direction: rtl;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            background: #f0f2f5;
             min-height: 100vh;
         }
 
-        /* Header الاحترافي */
+        /* Header */
         .main-header {
             background: linear-gradient(135deg, #0c5e9e 0%, #0a4a7a 100%);
             color: white;
             padding: 0;
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .header-top {
@@ -65,116 +67,199 @@
             background: rgba(255,255,255,0.4);
         }
 
-        /* تنسيق الرقم بشكل صحيح LTR */
         .contact-info {
             direction: ltr !important;
             text-align: left;
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            letter-spacing: 1px;
         }
 
         .logo-section {
-            padding: 20px;
-            text-align: center;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        /* تنسيق اللوجو - استبدل الصورة بلوجوك هنا */
         .logo-container {
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin-bottom: 10px;
+            gap: 15px;
         }
 
         .custom-logo {
-            max-width: 120px;
+            max-width: 60px;
             height: auto;
-            width: auto;
         }
 
-        /* لو عايز تستخدم SVG أو نص بدل الصورة مؤقتاً */
-        .logo-placeholder {
-            font-size: 50px;
+        .company-names h1 {
+            font-size: 20px;
+            margin-bottom: 5px;
         }
 
-        .logo-section h1 {
-            font-size: 28px;
-            margin: 10px 0 5px;
-            letter-spacing: 1px;
+        .arabic-name {
+            font-size: 18px;
         }
 
-        .logo-section .subtitle {
+        .english-name {
             font-size: 14px;
             opacity: 0.9;
         }
 
-        .arabic-name {
-            font-size: 20px;
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: 0.3s;
             font-weight: 500;
         }
 
-        .english-name {
-            font-size: 16px;
-            font-family: monospace;
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
         }
 
-        /* تحسين أزرار الفلاتر */
-        .controls {
-            text-align: center;
-            margin-bottom: 30px;
+        /* Main Layout */
+        .main-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
+            max-width: 1400px;
+            margin: 20px auto;
             padding: 0 20px;
+            gap: 25px;
         }
 
-        .category-btn {
-            padding: 12px 24px;
-            cursor: pointer;
-            border: none;
-            border-radius: 50px;
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
             background: white;
-            color: #0d6efd;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .category-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0d6efd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .category-btn.instant-supply {
-            background: #198754;
-            color: white;
+        .category-list {
+            list-style: none;
         }
 
-        .category-btn.active {
+        .category-list li {
+            margin-bottom: 8px;
+        }
+
+        .category-list a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .category-list a:hover {
+            background: #e3f2fd;
+            transform: translateX(-5px);
+        }
+
+        .category-list a.active {
             background: #0d6efd;
             color: white;
         }
 
-        /* شبكة المنتجات */
-        #products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            padding: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
+        .category-count {
+            margin-right: auto;
+            font-size: 12px;
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 20px;
         }
 
-        /* بطاقة المنتج */
+        .category-list a.active .category-count {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        /* Search Box */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 5px rgba(13,110,253,0.3);
+        }
+
+        /* Products Grid */
+        .products-content {
+            flex: 1;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .products-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .sort-select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        #products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Product Card */
         .product-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
-            animation: fadeInUp 0.5s ease;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -183,7 +268,6 @@
         }
 
         .product-card.instant {
-            border: 2px solid #198754;
             position: relative;
         }
 
@@ -196,20 +280,14 @@
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             z-index: 1;
         }
 
-        .product-card.instant[dir="ltr"]::before {
-            content: "⚡ Instant Supply";
-            right: auto;
-            left: 10px;
-        }
-
         .product-image {
             width: 100%;
-            height: 240px;
+            height: 220px;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
@@ -219,57 +297,61 @@
         }
 
         .product-info {
-            padding: 20px;
+            padding: 18px;
         }
 
         .product-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #1a1a2e;
         }
 
-        .product-desc {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
         .product-price {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: #0d6efd;
-            margin-bottom: 8px;
+            margin: 10px 0;
         }
 
-        .product-supply {
-            font-size: 13px;
-            color: #28a745;
-            margin-bottom: 15px;
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        .whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .btn-details {
+            flex: 1;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-details:hover {
+            background: #0b5ed7;
+        }
+
+        .btn-whatsapp {
             background: #25d366;
             color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
+            border: none;
+            padding: 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 45px;
         }
 
-        .whatsapp-btn:hover {
+        .btn-whatsapp:hover {
             background: #1da851;
-            transform: translateY(-2px);
         }
 
-        /* فوتر */
+        /* Footer */
         .footer {
             background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%);
             color: white;
@@ -283,88 +365,89 @@
             margin: 0 auto;
         }
 
-        .footer-logo {
-            font-size: 30px;
-            margin-bottom: 10px;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
         }
 
-        .footer-logo-img {
-            max-width: 80px;
-            height: auto;
+        .footer-links a {
+            color: white;
+            text-decoration: none;
         }
 
-        .footer-company {
-            font-size: 20px;
-            margin-bottom: 5px;
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         .footer-contact {
-            margin-top: 15px;
             direction: ltr !important;
             font-family: 'Courier New', monospace;
         }
 
-        .footer-copyright {
-            margin-top: 30px;
-            font-size: 12px;
-            opacity: 0.7;
-        }
-
-        /* مؤشر التحميل */
-        .loading-spinner {
-            text-align: center;
-            padding: 60px;
-            font-size: 18px;
-            color: #0d6efd;
-        }
-
-        .loading-spinner::after {
-            content: " ...";
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-
-        @keyframes dots {
-            0%, 20% { content: " ."; }
-            40% { content: " .."; }
-            60%, 100% { content: " ..."; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* RTL/LTR adjustments */
-        body[dir="ltr"] .product-card.instant::before {
-            right: auto;
-            left: 10px;
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
         }
 
         @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+                display: none;
+            }
+            
+            .sidebar.open {
+                display: block;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
             #products {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 15px;
-                padding: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             }
-            
-            .category-btn {
-                padding: 8px 16px;
-                font-size: 12px;
-            }
-            
-            .logo-section h1 {
-                font-size: 20px;
-            }
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .fa-spinner {
+            font-size: 40px;
+            color: #0d6efd;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body dir="rtl">
+<body>
 
     <header class="main-header">
         <div class="header-top">
@@ -372,41 +455,66 @@
                 <button class="lang-btn" onclick="setLang('ar')">🇸🇦 عربي</button>
                 <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
             </div>
-            <!-- الرقم معروض بشكل صحيح من الشمال لليمين -->
             <div class="contact-info">📞 +966 56 096 7982</div>
         </div>
         <div class="logo-section">
-            <!-- منطقة اللوجو - استبدل المحتوى هنا بلوجوك -->
             <div class="logo-container">
-                <img class="custom-logo" src="images/icon-192.png" alt="AGC Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                <div class="logo-placeholder" style="display: none;">🏥</div>
+                <img class="custom-logo" src="images/icon-192.png" alt="AGC Logo" onerror="this.style.display='none'">
+                <div class="company-names">
+                    <h1>
+                        <span class="arabic-name">مؤسسة ركن الخليج العربي</span><br>
+                        <span class="english-name">Arabian Gulf Corner | AGC</span>
+                    </h1>
+                </div>
             </div>
-            <h1>
-                <span class="arabic-name">مؤسسة ركن الخليج العربي</span><br>
-                <span class="english-name">Arabian Gulf Corner | AGC</span>
-            </h1>
-            <div class="subtitle"> حلول طبية متكاملة | Integrated Medical Solutions</div>
+            <div class="nav-links">
+                <a href="index.html" class="active" id="nav-home">🏠 الرئيسية</a>
+                <a href="contact.html" id="nav-contact">📞 اتصل بنا</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
         </div>
     </header>
 
-    <div class="controls" id="categoryButtons"></div>
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 بحث عن منتج...">
+            </div>
+            <div class="sidebar-title">
+                <i class="fas fa-list"></i>
+                <span id="categories-title">التصنيفات</span>
+            </div>
+            <ul class="category-list" id="categoryList"></ul>
+        </aside>
 
-    <div id="products"></div>
+        <main class="products-content">
+            <div class="products-header">
+                <div class="products-count" id="productsCount">عرض 0 منتج</div>
+                <select class="sort-select" id="sortSelect">
+                    <option value="default">📍 ترتيب افتراضي</option>
+                    <option value="price-asc">💰 السعر: من الأقل للأعلى</option>
+                    <option value="price-desc">💰 السعر: من الأعلى للأقل</option>
+                    <option value="name">🔤 حسب الاسم</option>
+                </select>
+            </div>
+            <div id="products"></div>
+        </main>
+    </div>
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-logo">
-                <img class="footer-logo-img" src="images/icon-192.png" alt="AGC" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                <div style="display: none;">🏥</div>
+            <div class="footer-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="contact.html">اتصل بنا</a>
             </div>
-            <div class="footer-company">مؤسسة ركن الخليج العربي</div>
-            <div class="footer-company">Arabian Gulf Corner (AGC)</div>
+            <div class="footer-company">مؤسسة ركن الخليج العربي | Arabian Gulf Corner (AGC)</div>
             <div class="footer-contact">📞 +966 56 096 7982 | ✉️ info@agc-medical.com</div>
             <p>📍 المملكة العربية السعودية | Saudi Arabia</p>
             <div class="footer-copyright">© 2026 جميع الحقوق محفوظة | All Rights Reserved</div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

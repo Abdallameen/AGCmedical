@@ -19,14 +19,13 @@ const categories = {
 async function loadProducts() {
     try {
         const response = await fetch(apiURL);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         
         products = data.map((item, index) => ({
             id: index,
             name: { ar: item.name_ar || "", en: item.name_en || "" },
             desc: { ar: item.desc_ar || "", en: item.desc_en || "" },
-            details: { ar: item.details_ar || item.desc_ar || "", en: item.details_en || item.desc_en || "" },
+            details: { ar: item.details_ar || "", en: item.details_en || "" },
             specs: { ar: item.specs_ar || "", en: item.specs_en || "" },
             warranty: { ar: item.warranty_ar || "", en: item.warranty_en || "" },
             price: item.price || "",
@@ -36,20 +35,21 @@ async function loadProducts() {
             category: item.category || "misc"
         }));
         
-        products = products.filter(p => p.name.ar || p.name.en);
-        
-        if (typeof renderCategories === 'function') renderCategories();
-        if (typeof renderProducts === 'function') renderProducts();
-        
+        console.log("✅ تم تحميل", products.length, "منتج");
         return products;
     } catch (error) {
-        console.error("خطأ في تحميل البيانات:", error);
+        console.error("خطأ:", error);
         return [];
     }
 }
 
-function getProductById(id) {
-    return products.find(p => p.id == id);
+async function init() {
+    await loadProducts();
+    // انتظر شوية عشان main.js يخلص تحميل
+    setTimeout(() => {
+        if (typeof renderCategories === 'function') renderCategories();
+        if (typeof renderProducts === 'function') renderProducts();
+    }, 100);
 }
 
-loadProducts();
+init();

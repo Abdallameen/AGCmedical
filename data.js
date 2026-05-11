@@ -1,3 +1,4 @@
+let products = [];
 
 const apiURL = "https://api.steinhq.com/v1/storages/6978e66baffba40a6241d79d/Sheet1";
 

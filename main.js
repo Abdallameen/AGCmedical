@@ -1,3 +1,4 @@
+// main.js
 let currentCategory = "all";
 let currentSort = "default";
 let searchQuery = "";
@@ -48,8 +49,6 @@ function sortProducts(productsList) {
                 const nameB = (b.name[currentLang] || '').toString();
                 return nameA.localeCompare(nameB);
             });
-            break;
-        default:
             break;
     }
     return sorted;
@@ -109,11 +108,9 @@ function renderProducts() {
     `).join('');
 }
 
-// استبدل دالة goToProduct في main.js بهذه:
-
 function goToProduct(id) {
     localStorage.setItem('selectedProductId', id);
-    window.location.href = 'product.html?id=' + id;  // أضف id في URL
+    window.location.href = 'product.html?id=' + id;
 }
 
 function orderOnWhatsApp(id) {
@@ -130,7 +127,7 @@ function orderOnWhatsApp(id) {
 
 function setLang(lang) {
     currentLang = lang;
-    localStorage.setItem('currentLang', lang);  // أضف هذا السطر
+    localStorage.setItem('currentLang', lang);
     document.body.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
     renderCategories();
     renderProducts();
@@ -162,8 +159,3 @@ if (document.getElementById('sortSelect')) {
         renderProducts();
     });
 }
-
-setTimeout(() => {
-    if (typeof renderCategories === 'function') renderCategories();
-    if (typeof renderProducts === 'function') renderProducts();
-}, 500);

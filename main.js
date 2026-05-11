@@ -1,6 +1,7 @@
 let currentCategory = "all";
 let currentSort = "default";
 let searchQuery = "";
+let currentLang = localStorage.getItem('currentLang') || 'ar';
 
 function renderCategories() {
     const categoryList = document.getElementById('categoryList');
@@ -129,6 +130,7 @@ function orderOnWhatsApp(id) {
 
 function setLang(lang) {
     currentLang = lang;
+    localStorage.setItem('currentLang', lang);  // أضف هذا السطر
     document.body.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
     renderCategories();
     renderProducts();

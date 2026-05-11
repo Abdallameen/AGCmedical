@@ -1,16 +1,9 @@
-// product-details.js - دعم كامل للغتين
+// product-details.js - يستخدم data.js
 
-let products = [];
-let currentLang = "ar";
-
-const API_URL = "https://api.steinhq.com/v1/storages/6978e66baffba40a6241d79d/Sheet1";
+let currentLang = localStorage.getItem('currentLang') || 'ar';
 
 async function loadProductDetails() {
     const container = document.getElementById('productDetail');
-    
-    // جلب اللغة من localStorage أو من الصفحة الرئيسية
-    const savedLang = localStorage.getItem('currentLang');
-    if (savedLang) currentLang = savedLang;
     
     container.innerHTML = `
         <div style="text-align:center;padding:60px;">
@@ -19,65 +12,42 @@ async function loadProductDetails() {
         </div>
     `;
     
+    // انتظر products من data.js
+    let waitCount = 0;
+    while (products.length === 0 && waitCount < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        waitCount++;
+    }
+    
     const urlParams = new URLSearchParams(window.location.search);
     let productId = urlParams.get('id');
     if (!productId) productId = localStorage.getItem('selectedProductId');
     
-    if (!productId) {
-        container.innerHTML = `<div style="text-align:center;padding:60px;">❌ ${currentLang === 'ar' ? 'لم يتم تحديد المنتج' : 'No product selected'}</div>`;
+    if (!productId || products.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:60px;">❌ ${currentLang === 'ar' ? 'المنتج غير موجود' : 'Product not found'}</div>`;
         return;
     }
     
-    try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        
-        products = data.map((item, index) => ({
-            id: index,
-            name_ar: item.name_ar || "",
-            name_en: item.name_en || "",
-            desc_ar: item.desc_ar || "",
-            desc_en: item.desc_en || "",
-            details_ar: item.details_ar || "",
-            details_en: item.details_en || "",
-            specs_ar: item.specs_ar || "",
-            specs_en: item.specs_en || "",
-            warranty_ar: item.warranty_ar || "",
-            warranty_en: item.warranty_en || "",
-            price: item.price || "",
-            supply_ar: item.supply_ar || "",
-            supply_en: item.supply_en || "",
-            isInstant: String(item.isInstant).toUpperCase() === "TRUE",
-            img: item.img || "",
-            category: item.category || "misc"
-        }));
-        
-        const product = products.find(p => p.id == parseInt(productId));
-        
-        if (!product) {
-            container.innerHTML = `<div style="text-align:center;padding:60px;">❌ ${currentLang === 'ar' ? 'المنتج غير موجود' : 'Product not found'}</div>`;
-            return;
-        }
-        
-        displayProduct(product);
-        
-    } catch (error) {
-        container.innerHTML = `<div style="text-align:center;padding:60px;">⚠️ ${currentLang === 'ar' ? 'خطأ في تحميل البيانات' : 'Error loading data'}</div>`;
+    const product = products.find(p => p.id == parseInt(productId));
+    
+    if (!product) {
+        container.innerHTML = `<div style="text-align:center;padding:60px;">❌ ${currentLang === 'ar' ? 'المنتج غير موجود' : 'Product not found'}</div>`;
+        return;
     }
+    
+    displayProduct(product);
 }
 
 function displayProduct(product) {
     const container = document.getElementById('productDetail');
     
-    // اختيار النصوص حسب اللغة الحالية
-    const name = currentLang === 'ar' ? product.name_ar : (product.name_en || product.name_ar);
-    const desc = currentLang === 'ar' ? product.desc_ar : (product.desc_en || product.desc_ar);
-    const details = currentLang === 'ar' ? product.details_ar : (product.details_en || product.details_ar);
-    const specs = currentLang === 'ar' ? product.specs_ar : (product.specs_en || product.specs_ar);
-    const warranty = currentLang === 'ar' ? product.warranty_ar : (product.warranty_en || product.warranty_ar);
-    const supply = currentLang === 'ar' ? product.supply_ar : (product.supply_en || product.supply_ar);
+    const name = currentLang === 'ar' ? product.name.ar : (product.name.en || product.name.ar);
+    const desc = currentLang === 'ar' ? product.desc.ar : (product.desc.en || product.desc.ar);
+    const details = currentLang === 'ar' ? product.details.ar : (product.details.en || product.details.ar);
+    const specs = currentLang === 'ar' ? product.specs.ar : (product.specs.en || product.specs.ar);
+    const warranty = currentLang === 'ar' ? product.warranty.ar : (product.warranty.en || product.warranty.ar);
+    const supply = currentLang === 'ar' ? product.supplyText.ar : (product.supplyText.en || product.supplyText.ar);
     
-    // اختيار العناوين حسب اللغة
     const detailsTitle = currentLang === 'ar' ? '📋 تفاصيل المنتج' : '📋 Product Details';
     const specsTitle = currentLang === 'ar' ? '⚙️ المواصفات التقنية' : '⚙️ Technical Specifications';
     const warrantyTitle = currentLang === 'ar' ? '🛡️ الضمان' : '🛡️ Warranty';
@@ -89,43 +59,10 @@ function displayProduct(product) {
     
     function formatText(text) {
         if (!text) return '';
-        // تحويل النقاط إلى list items
         let formatted = text.replace(/\n/g, '<br>');
         formatted = formatted.replace(/^\* (.*)$/gm, '• $1');
         formatted = formatted.replace(/^\- (.*)$/gm, '• $1');
-        formatted = formatted.replace(/^\d+\. (.*)$/gm, '<strong>$&</strong>');
         return formatted;
-    }
-    
-    // بناء HTML للتفاصيل (تظهر فقط لو فيه بيانات)
-    let detailsHTML = '';
-    if (details && details.trim() !== '') {
-        detailsHTML = `
-            <div class="info-section">
-                <h3><i class="fas fa-info-circle"></i> ${detailsTitle}</h3>
-                <div class="info-content">${formatText(details)}</div>
-            </div>
-        `;
-    }
-    
-    let specsHTML = '';
-    if (specs && specs.trim() !== '') {
-        specsHTML = `
-            <div class="info-section">
-                <h3><i class="fas fa-microchip"></i> ${specsTitle}</h3>
-                <div class="info-content">${formatText(specs)}</div>
-            </div>
-        `;
-    }
-    
-    let warrantyHTML = '';
-    if (warranty && warranty.trim() !== '') {
-        warrantyHTML = `
-            <div class="info-section">
-                <h3><i class="fas fa-shield-alt"></i> ${warrantyTitle}</h3>
-                <div class="info-content">${formatText(warranty)}</div>
-            </div>
-        `;
     }
     
     container.innerHTML = `
@@ -144,9 +81,9 @@ function displayProduct(product) {
                     
                     ${product.isInstant ? `<div class="instant-badge-large">⚡ ${instantText}</div>` : ''}
                     
-                    ${detailsHTML}
-                    ${specsHTML}
-                    ${warrantyHTML}
+                    ${details ? `<div class="info-section"><h3><i class="fas fa-info-circle"></i> ${detailsTitle}</h3><div class="info-content">${formatText(details)}</div></div>` : ''}
+                    ${specs ? `<div class="info-section"><h3><i class="fas fa-microchip"></i> ${specsTitle}</h3><div class="info-content">${formatText(specs)}</div></div>` : ''}
+                    ${warranty ? `<div class="info-section"><h3><i class="fas fa-shield-alt"></i> ${warrantyTitle}</h3><div class="info-content">${formatText(warranty)}</div></div>` : ''}
                     
                     <button onclick="orderProduct(${product.id})" class="btn-whatsapp-large">
                         <i class="fab fa-whatsapp"></i> ${orderText}
@@ -161,30 +98,14 @@ function orderProduct(id) {
     const product = products.find(p => p.id == id);
     if (!product) return;
     
-    const name = currentLang === 'ar' ? product.name_ar : (product.name_en || product.name_ar);
-    const specs = currentLang === 'ar' ? product.specs_ar : (product.specs_en || product.specs_ar);
-    const details = currentLang === 'ar' ? product.details_ar : (product.details_en || product.details_ar);
+    const name = currentLang === 'ar' ? product.name.ar : (product.name.en || product.name.ar);
+    const specs = currentLang === 'ar' ? product.specs.ar : (product.specs.en || product.specs.ar);
     
-    let message = `📋 طلب شراء منتج - مؤسسة ركن الخليج العربي AGC\n\n`;
-    message += `━━━━━━━━━━━━━━━━━━━━\n`;
+    let message = `📋 طلب شراء منتج - AGC\n\n`;
     message += `🏷️ المنتج: ${name}\n`;
-    message += `💰 السعر: ${product.price || 'غير محدد'} ${currentLang === 'ar' ? 'ريال' : 'SAR'}\n`;
-    message += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-    
-    if (details && details.trim() !== '') {
-        message += `📝 تفاصيل المنتج:\n${details.substring(0, 300)}\n\n`;
-    }
-    
-    if (specs && specs.trim() !== '') {
-        message += `⚙️ المواصفات:\n${specs.substring(0, 300)}\n\n`;
-    }
-    
-    message += `👤 بيانات العميل:\n`;
-    message += `الاسم: \n`;
-    message += `رقم الجوال: \n`;
-    message += `العنوان: \n`;
-    message += `المدينة: \n\n`;
-    message += `━━━━━━━━━━━━━━━━━━━━\n`;
+    message += `💰 السعر: ${product.price || 'غير محدد'}\n`;
+    if (specs) message += `\n⚙️ المواصفات:\n${specs.substring(0, 300)}\n`;
+    message += `\n👤 بيانات العميل:\nالاسم: \nرقم الجوال: \nالعنوان: \n`;
     
     window.open(`https://wa.me/966560967982?text=${encodeURIComponent(message)}`, '_blank');
 }
@@ -195,5 +116,4 @@ function setLang(lang) {
     loadProductDetails();
 }
 
-// بدء التشغيل
 loadProductDetails();

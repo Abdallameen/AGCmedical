@@ -1,5 +1,3 @@
-// product-details.js
-let currentLang = localStorage.getItem('currentLang') || 'ar';
 
 async function loadProductDetails() {
     const container = document.getElementById('productDetail');

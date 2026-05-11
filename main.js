@@ -108,9 +108,11 @@ function renderProducts() {
     `).join('');
 }
 
+// استبدل دالة goToProduct في main.js بهذه:
+
 function goToProduct(id) {
     localStorage.setItem('selectedProductId', id);
-    window.location.href = 'product.html';
+    window.location.href = 'product.html?id=' + id;  // أضف id في URL
 }
 
 function orderOnWhatsApp(id) {

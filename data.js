@@ -3,7 +3,6 @@ let currentLang = "ar";
 
 const apiURL = "https://api.steinhq.com/v1/storages/6978e66baffba40a6241d79d/Sheet1";
 
-// التصنيفات مع أيقوناتها
 const categories = {
     all: { ar: "🌟 جميع المنتجات", en: "🌟 All Products", icon: "fa-grid" },
     instant: { ar: "⚡ توريد فوري", en: "⚡ Instant Supply", icon: "fa-bolt" },
@@ -27,6 +26,9 @@ async function loadProducts() {
             id: index,
             name: { ar: item.name_ar || "", en: item.name_en || "" },
             desc: { ar: item.desc_ar || "", en: item.desc_en || "" },
+            details: { ar: item.details_ar || item.desc_ar || "", en: item.details_en || item.desc_en || "" },
+            specs: { ar: item.specs_ar || "", en: item.specs_en || "" },
+            warranty: { ar: item.warranty_ar || "", en: item.warranty_en || "" },
             price: item.price || "",
             supplyText: { ar: item.supply_ar || "", en: item.supply_en || "" },
             isInstant: String(item.isInstant).toUpperCase() === "TRUE",

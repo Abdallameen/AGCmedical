@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مؤسسة ركن الخليج العربي - اتصل بنا">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>اتصل بنا | AGC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            background: #f0f2f5;
+        }
+
+        .main-header {
+            background: linear-gradient(135deg, #0c5e9e 0%, #0a4a7a 100%);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 8px 15px;
+            border-radius: 25px;
+        }
+
+        .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .contact-info-card h2 {
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .info-item i {
+            font-size: 24px;
+            color: #0d6efd;
+            width: 40px;
+        }
+
+        .info-item .info-text {
+            flex: 1;
+        }
+
+        .info-item .label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .info-item .value {
+            direction: ltr;
+            font-family: monospace;
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .contact-form h2 {
+            margin-bottom: 20px;
+            color: #0d6efd;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .map-container {
+            margin-top: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .working-hours {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .working-hours h3 {
+            margin-bottom: 15px;
+        }
+
+        .hour-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div>🏥 مؤسسة ركن الخليج العربي | AGC</div>
+            <div class="nav-links">
+                <a href="index.html">🏠 الرئيسية</a>
+                <a href="contact.html" class="active">📞 اتصل بنا</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="contact-container">
+        <div class="contact-grid">
+            <div class="contact-info-card">
+                <h2><i class="fas fa-address-card"></i> معلومات التواصل</h2>
+                
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <div class="info-text">
+                        <div class="label">📞 رقم الهاتف</div>
+                        <div class="value">+966 56 096 7982</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <div class="info-text">
+                        <div class="label">💬 واتساب</div>
+                        <div class="value">+966 56 096 7982</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="info-text">
+                        <div class="label">✉️ البريد الإلكتروني</div>
+                        <div class="value">info@agc-medical.com</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="fas fa-location-dot"></i>
+                    <div class="info-text">
+                        <div class="label">📍 العنوان</div>
+                        <div class="value">المملكة العربية السعودية - الرياض</div>
+                    </div>
+                </div>
+
+                <div class="working-hours">
+                    <h3>🕐 ساعات العمل</h3>
+                    <div class="hour-item">
+                        <span>الأحد - الخميس</span>
+                        <span>9:00 ص - 6:00 م</span>
+                    </div>
+                    <div class="hour-item">
+                        <span>الجمعة</span>
+                        <span>مغلق</span>
+                    </div>
+                    <div class="hour-item">
+                        <span>السبت</span>
+                        <span>10:00 ص - 2:00 م</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2><i class="fas fa-paper-plane"></i> أرسل لنا رسالة</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="الاسم الكامل" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" placeholder="رقم الجوال">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="البريد الإلكتروني">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" placeholder="نص الرسالة..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fab fa-whatsapp"></i> إرسال عبر واتساب
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28953.82437506354!2d46.6753!3d24.7136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f0382d2d6f9d7%3A0x8b1c3f5e7a9d2b4c!2sRiyadh%20Saudi%20Arabia!5e0!3m2!1sen!2seg!4v1700000000000!5m2!1sar!2seg" 
+                width="100%" 
+                height="300" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            const whatsappMsg = encodeURIComponent(
+                `📋 رسالة جديدة من الموقع\n\n` +
+                `👤 الاسم: ${name}\n` +
+                `📞 الجوال: ${phone}\n` +
+                `✉️ البريد: ${email}\n` +
+                `💬 الرسالة: ${message}`
+            );
+            
+            window.open(`https://wa.me/966560967982?text=${whatsappMsg}`, '_blank');
+        });
+    </script>
+</body>
+</html>
